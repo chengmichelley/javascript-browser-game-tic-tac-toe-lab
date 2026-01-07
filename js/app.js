@@ -20,6 +20,41 @@ console.log(messageEl);
 
 /*-------------------------------- Functions --------------------------------*/
 
+const updateBoard = () => {
+    board.forEach((cell,idx) => {
+        if(cell === 'X') {
+            squareEls[idx].textContent = 'X';
+        } else if (cell === 'O') {
+            squareEls[idx].textContent = 'O';
+        } else {
+            squareEls[idx].textContent = '';
+        }
+    });
+};
+
+const updateMessage = () => {
+    if(!winner && !tie) {
+        if(turn === 'X') {
+            messageEl.textContent = `It's X's turn`;
+        } else {
+            messageEl.textContent = `It's O's turn`;
+        }
+    } else if(!winner && tie) {
+        messageEl.textContent = `It's a tie game!`;
+    } else {
+        if (turn === 'X') {
+            messageEl.textContent = `Congratulations! X wins!`
+        } else {
+            messageEl.textContent = `Congratulations! O wins!`
+        }
+    }
+};
+
+const render = () => {
+    updateBoard();
+    updateMessage();
+};
+
 const init = () => {
     board = ['', '', '', '', '', '', '', '', ''];
     turn = 'X';
@@ -29,7 +64,6 @@ const init = () => {
 };
 
 init();
-
 /*----------------------------- Event Listeners -----------------------------*/
 
 
