@@ -24,6 +24,8 @@ const squareEls = document.querySelectorAll('.sqr');
 
 const messageEl = document.querySelector('#message');
 
+const resetBtnEl = document.querySelector('#reset');
+
 /*-------------------------------- Functions --------------------------------*/
 const placePeace = (idx) => {
     board[idx] = turn;
@@ -126,3 +128,4 @@ squareEls.forEach((square) => {
     square.addEventListener('click', handleClick);
 });
 
+resetBtnEl.addEventListener('click', init);
