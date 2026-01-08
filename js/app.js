@@ -24,10 +24,42 @@ const squareEls = document.querySelectorAll('.sqr');
 
 const messageEl = document.querySelector('#message');
 
-console.log(squareEls);
-console.log(messageEl);
-
 /*-------------------------------- Functions --------------------------------*/
+const placePeace = (idx) => {
+    board[idx] = turn;
+};
+
+const checkForWinner = () => {
+    winningCombos.forEach((winningCombo) => {
+        if(
+            board[winningCombo[0]] !== '' && 
+            board[winningCombo[0]] === board[winningCombo[1]] &&
+            board[winningCombo[1]] === board[winningCombo[2]]
+      ) {
+        winner = true;
+      }
+    });
+};
+
+const checkForTie = () => {
+    if (winner) {
+        return;
+    }
+    if (!board.includes('')) {
+        tie = true;
+    }
+};
+
+const switchPlayerTurn = () => {
+    if (winner) {
+        return;
+    }
+    if (turn === 'X') {
+            turn = 'O';
+        } else {
+            turn = 'X';
+        }
+};
 
 const updateBoard = () => {
     board.forEach((cell,idx) => {
@@ -64,6 +96,20 @@ const render = () => {
     updateMessage();
 };
 
+const handleClick = (event) => {
+    const squareIdx = event.target.id;
+    const squareIsFull = board[squareIdx] !== '';
+    if(squareIsFull || winner) {
+        return;
+    }
+
+    placePeace(squareIdx);
+    checkForWinner();
+    checkForTie();
+    switchPlayerTurn();
+    render();
+};
+
 const init = () => {
     board = ['', '', '', '', '', '', '', '', ''];
     turn = 'X';
@@ -73,7 +119,10 @@ const init = () => {
 };
 
 init();
+
 /*----------------------------- Event Listeners -----------------------------*/
 
-
+squareEls.forEach((square) => {
+    square.addEventListener('click', handleClick);
+});
 
