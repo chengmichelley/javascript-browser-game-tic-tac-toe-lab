@@ -27,7 +27,7 @@ const messageEl = document.querySelector('#message');
 const resetBtnEl = document.querySelector('#reset');
 
 /*-------------------------------- Functions --------------------------------*/
-const placePeace = (idx) => {
+const placePiece = (idx) => {
     board[idx] = turn;
 };
 
@@ -65,13 +65,7 @@ const switchPlayerTurn = () => {
 
 const updateBoard = () => {
     board.forEach((cell,idx) => {
-        if(cell === 'X') {
-            squareEls[idx].textContent = 'X';
-        } else if (cell === 'O') {
-            squareEls[idx].textContent = 'O';
-        } else {
-            squareEls[idx].textContent = '';
-        }
+        squareEls[idx].textContent = cell;
     });
 };
 
@@ -101,11 +95,11 @@ const render = () => {
 const handleClick = (event) => {
     const squareIdx = event.target.id;
     const squareIsFull = board[squareIdx] !== '';
-    if(squareIsFull || winner) {
+    if(squareIsFull || winner || tie) {
         return;
     }
 
-    placePeace(squareIdx);
+    placePiece(squareIdx);
     checkForWinner();
     checkForTie();
     switchPlayerTurn();
